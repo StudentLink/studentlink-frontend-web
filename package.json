@@ -1,0 +1,42 @@
+{
+	"name": "studentlink-web-app",
+	"version": "0.0.0",
+	"scripts": {
+		"dev": "next dev",
+		"build": "next build",
+		"start": "next start",
+		"lint": "next lint"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/StudentLink/studentlink-web-app.git"
+	},
+	"author": "Un Épicier",
+	"license": "UNLICENSED",
+	"bugs": {
+		"url": "https://github.com/StudentLink/studentlink-web-app/issues"
+	},
+	"homepage": "https://github.com/StudentLink/studentlink-web-app#readme",
+	"dependencies": {
+		"@ionic/react": "^7.8.3",
+		"@types/node": "^20.12.5",
+		"@types/react": "^18.2.74",
+		"@types/react-dom": "^18.2.24",
+		"autoprefixer": "^10.4.19",
+		"dotenv": "^16.4.5",
+		"encoding": "^0.1.13",
+		"eslint": "^8.57.0",
+		"eslint-config-next": "^14.1.4",
+		"next": "^14.1.4",
+		"postcss": "^8.4.38",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0",
+		"sass": "^1.74.1",
+		"sharp": "^0.33.3",
+		"typescript": "^5.4.4"
+	},
+	"devDependencies": {
+		"eslint-config-prettier": "^9.1.0",
+		"prettier": "^3.2.5"
+	}
+}
