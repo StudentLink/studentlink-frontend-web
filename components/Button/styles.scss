@@ -1,0 +1,21 @@
+.button {
+	position: relative;
+	padding: 12px 30px;
+	border: none;
+	border-radius: 12px;
+	font-size: 1rem;
+	font-weight: 600;
+	color: #fff;
+	cursor: pointer;
+	user-select: none;
+
+	&:active {
+		transform: translateY(5px);
+		box-shadow: none !important;
+	}
+
+	&:disabled {
+		filter: grayscale(0.8);
+		cursor: not-allowed;
+	}
+}
