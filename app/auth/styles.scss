@@ -11,7 +11,7 @@
 	width: 95svw;
 	max-width: 450px;
 	border-radius: 12px;
-	background-color: #ffffff;
+	background-color: var(--black-2);
 	box-shadow: var(--shadow) rgba(0, 0, 0, 0.2);
 
 	& > .title {
@@ -39,6 +39,7 @@
 			align-items: stretch;
 			border: 2px solid var(--blue);
 			border-radius: 7px;
+			background-color: var(--black-3);
 
 			& > .input {
 				flex-grow: 1;

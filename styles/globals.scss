@@ -11,6 +11,10 @@
 	--yellow: #ffde00;
 	--white: #e7e7e7;
 
+	--black-1: #0c1920;
+	--black-2: #17313f;
+	--black-3: #1c3b4b;
+
 	--darken-blue: #2ab2f7;
 	--darken-green: #5da800;
 	--darken-pink: #cc0052;
@@ -25,10 +29,11 @@
 	padding: 0;
 	box-sizing: border-box;
 	font-family: 'Montserrat', sans-serif;
+	color: var(--white);
 }
 
 .app {
 	width: 100svw;
 	min-height: 100svh;
-	background-color: var(--white);
+	background-color: var(--black-1);
 }

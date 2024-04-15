@@ -37,7 +37,7 @@ const Auth = () => {
 		// 	body: JSON.stringify(body),
 		// });
 
-		// const data = await response.json();
+		// const { token } = await response.json();
 		const { token } = {
 			token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImN0eSI6IkpXVCJ9.eyJpYXQiOjE3MTI2NzEzMjEsImV4cCI6MTc0NDE2NDAwMCwic3ViIjoiNCIsInJvbGVzIjpbIlJPTEVfQURNSU4iLCJST0xFX1VTRVIiXSwiZW1haWwiOiJhZG1pbkBzdHVkZW50bGluay5jb20ifQ.dIrMHiM-SRMgGrG7jFzjpTVWHzYOKZXzQm7IjEpUnsfKGaj5OASq6t-sAkdJ9dgvaUQa_haQ7D_gMMEa2T6RqBZCYqPIya2_LojKRcci9sBi2FqXhB6v-zjvIEGEdPfzPfndpIbdfg6mjlwXZFyFLRf8CPHmUcBOogp6Rw0htSemOwOPnkZx_euaI_-BLssxF92cOIm35YPhamN6tqnhbAgLtZbF59gYC89zn4YUJER7BWFJ_eAbSwiP0kEcqvqbj3MPCV7cvgaoL9DN6XaY0SVLjmw7ZK-rpjSeWz_-FinUO6WMIeakTri8T0Q0m3HkxZ1eMQ_pG3P69z0kp5U7VMuW8VZwTJfvQt9tMwfGIb9kxh1rfyd_1Yu-kcjsZPEPWlotd-BRlKRT5HR2YRNeMrTajZujZEzIcTG_SvD2LFzh9-TU27KlQ31xIWF6MOCde55pU0SXcydqlXnM7jHHukMpLoWYGRLd3ZUPxi4lhUeoT51NvLGlCJENhRmxdlhFoNSNIQcsH9yIhK2nzc10d6oD2FU0BCz0YpUQOU7PCFCvLwVhz7YbcqDZXmCFllyEMOYtpZLmT4VIwVG49DJA76e3Pq96vAAGUfj35i7wReRyFfi6Qz4nY-M9livLQp6lqnB1lT7pkTNpyg3NFnbuMFR9Rbc7N7nlQSsBC4tabe4',
 		};
@@ -47,8 +47,6 @@ const Auth = () => {
 		}
 
 		const expires = jwtDecode(token).exp;
-
-		console.log(expires);
 
 		cookies.set('token', token, {
 			path: '/',
