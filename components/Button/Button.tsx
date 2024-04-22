@@ -1,18 +1,15 @@
 import { MouseEventHandler } from 'react';
-import { IonIcon } from '@ionic/react';
 import './styles.scss';
 
 interface Params {
-	text: string;
-	icon?: string | null;
+	children: React.ReactNode | null;
 	color?: 'blue' | 'pink' | 'yellow' | 'green';
 	disabled?: boolean;
 	onClick?: MouseEventHandler<HTMLButtonElement>;
 }
 
 const Button = ({
-	text,
-	icon,
+	children,
 	color = 'blue',
 	disabled = false,
 	onClick = () => {},
@@ -27,8 +24,7 @@ const Button = ({
 			}}
 			disabled={disabled}
 		>
-			{icon && <IonIcon icon={icon} />}
-			{text}
+			{children}
 		</button>
 	);
 };

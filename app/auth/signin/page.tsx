@@ -58,7 +58,9 @@ const Auth = () => {
 
 	return (
 		<div className='container'>
-			<h1 className='title'>Connexion</h1>
+			<div className='heading'>
+				<h1 className='title'>Connexion</h1>
+			</div>
 
 			<div className='inputsContainer'>
 				{error && <p className='error'>{error}</p>}
@@ -91,11 +93,12 @@ const Auth = () => {
 			</div>
 
 			<Button
-				text='Se connecter'
 				color='blue'
 				onClick={signIn}
 				disabled={isLoading}
-			/>
+			>
+				Se connecter
+			</Button>
 		</div>
 	);
 };

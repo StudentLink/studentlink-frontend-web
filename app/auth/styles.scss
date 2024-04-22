@@ -18,12 +18,25 @@
 		padding: 35px;
 	}
 
-	& > .title {
-		font-size: 2.5rem;
-		font-weight: 400;
-		text-align: center;
-		color: var(--white);
-		user-select: none;
+	& > .heading {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+
+		& > .title {
+			font-size: 2.5rem;
+			font-weight: 400;
+			color: var(--white);
+			user-select: none;
+		}
+
+		& > .subTitle {
+			font-size: 1rem;
+			font-weight: 400;
+			color: var(--darken-white);
+			user-select: none;
+		}
 	}
 
 	& > .inputsContainer {
@@ -64,6 +77,10 @@
 				font-size: 1rem;
 				color: var(--white);
 				outline: none;
+
+				&.noPadding {
+					padding: 0;
+				}
 
 				&::placeholder {
 					color: var(--blue);

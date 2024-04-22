@@ -23,7 +23,10 @@ const Page = () => {
 
 	return (
 		<div className='container'>
-			<h1 className='title'>Inscription</h1>
+			<div className='heading'>
+				<h1 className='title'>Inscription</h1>
+				<h2 className='subTitle'>Étape 1</h2>
+			</div>
 
 			<div className='inputsContainer'>
 				{error && <p className='error'>{error}</p>}
@@ -103,10 +106,11 @@ const Page = () => {
 			</div>
 
 			<Button
-				text="Aller à l'étape 2"
 				color='blue'
 				onClick={showNextStep}
-			/>
+			>
+				Aller à l'étape 2
+			</Button>
 		</div>
 	);
 };
