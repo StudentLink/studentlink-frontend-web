@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
 @function darken($color, $amount) {
@@ -14,6 +18,7 @@
 	--black-1: #0c1920;
 	--black-2: #17313f;
 	--black-3: #1c3b4b;
+	--black-4: #204457;
 
 	--darken-blue: #2ab2f7;
 	--darken-green: #5da800;

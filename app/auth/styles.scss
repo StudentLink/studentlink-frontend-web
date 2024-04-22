@@ -9,16 +9,20 @@
 	gap: 25px;
 	padding: 35px 50px;
 	width: 95svw;
-	max-width: 450px;
+	max-width: 650px;
 	border-radius: 12px;
 	background-color: var(--black-2);
 	box-shadow: var(--shadow) rgba(0, 0, 0, 0.2);
+
+	@media (max-width: 768px) {
+		padding: 35px;
+	}
 
 	& > .title {
 		font-size: 2.5rem;
 		font-weight: 400;
 		text-align: center;
-		color: var(--blue);
+		color: var(--white);
 		user-select: none;
 	}
 
@@ -30,6 +34,17 @@
 
 		.error {
 			color: var(--pink);
+		}
+
+		& > .rowInputs {
+			display: grid;
+			grid-template-columns: repeat(2, 1fr);
+			gap: 10px;
+
+			@media (max-width: 768px) {
+				grid-template-columns: 1fr;
+				grid-template-rows: repeat(2, 1fr);
+			}
 		}
 
 		& .inputBox {
@@ -47,7 +62,7 @@
 				border: none;
 				background: transparent;
 				font-size: 1rem;
-				color: var(--blue);
+				color: var(--white);
 				outline: none;
 
 				&::placeholder {
@@ -59,7 +74,7 @@
 				position: absolute;
 				z-index: 1;
 				top: 50%;
-				right: 5px;
+				right: 9px;
 				transform: translateY(-50%);
 				font-size: 1.2rem;
 				color: var(--blue);
@@ -68,13 +83,19 @@
 		}
 
 		& > .link {
+			width: max-content;
 			font-size: 0.9rem;
 			color: var(--blue);
 			text-decoration: none;
 			transition: filter 0.2s ease;
 			user-select: none;
+			outline: none;
 
 			&:hover {
+				filter: brightness(0.8);
+			}
+
+			&:focus {
 				filter: brightness(0.8);
 			}
 		}
