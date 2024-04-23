@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useAppSelector } from '@lib/hooks';
 
 export type City = {
 	insee_code: string;
@@ -14,17 +16,30 @@ export type City = {
 };
 
 const useData = () => {
+	const router = useRouter();
+
 	const [error, setError] = useState<string | null>(null);
-	const [isLoading, setIsLoading] = useState(false);
 	const [localisations, setLocalisations] = useState<number[]>([]);
 	const [school, setSchool] = useState<number>();
 	const [dpts, setDpts] = useState<City[]>([]);
 
+	const auth = useAppSelector(state => state.auth);
+
+	useEffect(() => {
+		if (auth.isLogged) {
+			router.push('/');
+			return;
+		}
+
+		if (auth.displayname == '' && auth.username == '' && auth.email == '') {
+			router.push('/auth/signup/steps/1');
+			return;
+		}
+	}, []);
+
 	return {
 		error,
 		setError,
-		isLoading,
-		setIsLoading,
 		localisations,
 		setLocalisations,
 		school,

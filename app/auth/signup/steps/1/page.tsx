@@ -1,13 +1,13 @@
 'use client';
 
 // -------------------------------------------------- React & Next -----------------------------------------------------
-import { useState } from 'react';
 import Link from 'next/link';
 
 // --------------------------------------------------- Components ------------------------------------------------------
 import Button from '@components/Button/Button';
 
 // ------------------------------------------------------ Hooks --------------------------------------------------------
+import useData from './hooks/useData';
 import useActions from './hooks/useActions';
 
 // ------------------------------------------------- Assets & Styles ---------------------------------------------------
@@ -16,10 +16,9 @@ import { eyeOffOutline, eyeOutline } from 'ionicons/icons';
 import '../../../styles.scss';
 
 const Page = () => {
-	const [pswdVisibility, setPswdVisibility] = useState(false);
-	const [error, setError] = useState<string | null>('');
-
-	const { showNextStep } = useActions(setError);
+	const { auth, pswdVisibility, setPswdVisibility, error, setError } =
+		useData();
+	const { signUp } = useActions(setError);
 
 	return (
 		<div className='container'>
@@ -37,6 +36,7 @@ const Page = () => {
 							id='lastname'
 							className='input'
 							placeholder='Nom'
+							defaultValue={auth.displayname.split(' ')[1]}
 						/>
 					</div>
 					<div className='inputBox'>
@@ -45,6 +45,7 @@ const Page = () => {
 							id='firstname'
 							className='input'
 							placeholder='Prénom'
+							defaultValue={auth.displayname.split(' ')[0]}
 						/>
 					</div>
 				</div>
@@ -54,6 +55,7 @@ const Page = () => {
 						id='username'
 						className='input'
 						placeholder={"Nom d'utilisateur"}
+						defaultValue={auth.username}
 					/>
 				</div>
 				<div className='inputBox'>
@@ -62,6 +64,7 @@ const Page = () => {
 						id='email'
 						className='input'
 						placeholder='Adresse e-mail'
+						defaultValue={auth.email}
 					/>
 				</div>
 				<div className='inputBox'>
@@ -107,7 +110,7 @@ const Page = () => {
 
 			<Button
 				color='blue'
-				onClick={showNextStep}
+				onClick={signUp}
 			>
 				Aller à l'étape 2
 			</Button>

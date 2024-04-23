@@ -1,8 +1,5 @@
 'use client';
 
-// ------------------------------------------------------ React --------------------------------------------------------
-import { useState } from 'react';
-
 // ------------------------------------------------------ Hooks --------------------------------------------------------
 import useData from './hooks/useData';
 import useActions from './hooks/useActions';
@@ -14,13 +11,14 @@ import Button from '@components/Button/Button';
 // ----------------------------------------------------- Styles --------------------------------------------------------
 import selectStyle from '../selectStyle';
 import '../../../styles.scss';
+import { IonIcon } from '@ionic/react';
+import { chevronBackOutline } from 'ionicons/icons';
+import Link from 'next/link';
 
 const Page = () => {
 	const {
 		error,
 		setError,
-		isLoading,
-		setIsLoading,
 		localisations,
 		setLocalisations,
 		school,
@@ -32,7 +30,6 @@ const Page = () => {
 
 	const { signUp, searchCities } = useActions(
 		setError,
-		setIsLoading,
 		setDpts,
 		localisations,
 		school
@@ -40,6 +37,9 @@ const Page = () => {
 
 	return (
 		<div className='container'>
+			<Link href={'/auth/signup/steps/1'}>
+				<IonIcon icon={chevronBackOutline} />
+			</Link>
 			<div className='heading'>
 				<h1 className='title'>Inscription</h1>
 				<h2 className='subTitle'>Étape 2</h2>
@@ -98,7 +98,6 @@ const Page = () => {
 			<Button
 				color='blue'
 				onClick={signUp}
-				disabled={isLoading}
 			>
 				S'inscrire
 			</Button>
