@@ -1,0 +1,29 @@
+.notFound {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	& > .title {
+		font-size: 10rem;
+		font-weight: 700;
+		line-height: 10rem;
+		color: var(--pink);
+		user-select: none;
+	}
+
+	& > .label {
+		margin-bottom: 50px;
+		font-size: 2rem;
+		text-align: center;
+		color: var(--white);
+		user-select: none;
+
+		@media (max-width: 768px) {
+			font-size: 1.5rem;
+		}
+	}
+}

@@ -12,7 +12,7 @@ const Button = ({
 	children,
 	color = 'blue',
 	disabled = false,
-	onClick = () => {},
+	onClick,
 }: Params) => {
 	return (
 		<button

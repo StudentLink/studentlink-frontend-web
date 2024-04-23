@@ -1,6 +1,11 @@
+'use client';
+
+import useData from './hooks/useData';
 import './styles.scss';
 
-const Home = () => {
+const Feed = () => {
+	const { posts, loadPosts } = useData();
+
 	return (
 		<div>
 			<h1>Hello World</h1>
@@ -8,4 +13,4 @@ const Home = () => {
 	);
 };
 
-export default Home;
+export default Feed;
