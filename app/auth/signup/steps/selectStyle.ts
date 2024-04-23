@@ -67,6 +67,22 @@ const style: StylesConfig<
 		...base,
 		color: 'var(--white)',
 	}),
+	multiValue: (base, _) => ({
+		...base,
+		backgroundColor: 'var(--black-5)',
+	}),
+	multiValueLabel: (base, _) => ({
+		...base,
+		color: 'var(--white)',
+	}),
+	multiValueRemove: (base, _) => ({
+		...base,
+		marginLeft: '5px',
+
+		':hover': {
+			backgroundColor: 'var(--pink)',
+		},
+	}),
 };
 
 export default style;
