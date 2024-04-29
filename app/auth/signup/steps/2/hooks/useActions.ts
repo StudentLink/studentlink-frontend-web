@@ -3,14 +3,13 @@ import { useRouter } from 'next/navigation';
 import { useCookies } from 'next-client-cookies';
 import { City } from './useData';
 import cities from '@utils/cities.json';
-import { jwtDecode } from 'jwt-decode';
-import { useAppDispatch } from '@lib/hooks';
-import { setIsLogged } from '@lib/features/auth/authSlice';
+import { useAppDispatch, useAppSelector } from '@lib/hooks';
+import { setAuth, setIsLogged } from '@lib/features/auth/authSlice';
 
 const useActions = (
 	setError: Dispatch<SetStateAction<string | null>>,
 	setDpts: Dispatch<SetStateAction<City[]>>,
-	localisations: number[],
+	locations: number[],
 	school: number | undefined
 ) => {
 	const router = useRouter();
@@ -28,8 +27,10 @@ const useActions = (
 		);
 	};
 
+	const username = useAppSelector(state => state.auth.username);
+
 	const signUp = async () => {
-		if (localisations.length < 0) {
+		if (locations.length < 0) {
 			setError('Il manque une ville minimum');
 			return;
 		}
@@ -41,7 +42,7 @@ const useActions = (
 
 		try {
 			const request = await fetch(
-				'https://studentlink.etudiants.ynov-bordeaux.com/api/users/me',
+				`https://studentlink.etudiants.ynov-bordeaux.com/api/users/${username}`,
 				{
 					method: 'PUT',
 					headers: {
@@ -49,7 +50,7 @@ const useActions = (
 						Authorization: `Bearer ${cookies.get('token')}`,
 					},
 					body: JSON.stringify({
-						localisations: localisations,
+						locations: locations,
 						school: school,
 					}),
 				}
@@ -62,21 +63,12 @@ const useActions = (
 				return;
 			}
 
-			const token = response.token;
-
-			if (!token) {
-				setError(
-					"Une erreur s'est produite. Réessaie dans quelques secondes."
-				);
-				return;
-			}
-
-			const expires = jwtDecode(response.token).exp;
-
-			cookies.set('token', response.token, {
-				path: '/',
-				expires: expires ? new Date(expires * 1000) : 0,
-			});
+			dispatch(
+				setAuth({
+					locations: response.locations,
+					school: response.school,
+				})
+			);
 		} catch (error) {
 			console.error(error);
 			return;

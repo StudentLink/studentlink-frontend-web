@@ -19,8 +19,8 @@ const Page = () => {
 	const {
 		error,
 		setError,
-		localisations,
-		setLocalisations,
+		locations,
+		setLocations,
 		school,
 		setSchool,
 		dpts,
@@ -31,7 +31,7 @@ const Page = () => {
 	const { signUp, searchCities } = useActions(
 		setError,
 		setDpts,
-		localisations,
+		locations,
 		school
 	);
 
@@ -71,7 +71,7 @@ const Page = () => {
 						className='input noPadding'
 						onInputChange={value => searchCities(value)}
 						onChange={value => {
-							setLocalisations(value.map(x => x.value));
+							setLocations(value.map(x => x.value));
 						}}
 					/>
 				</div>

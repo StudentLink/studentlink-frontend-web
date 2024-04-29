@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAppSelector } from '@lib/hooks';
+import School from '@customTypes/school';
 
 export type City = {
 	insee_code: string;
@@ -19,11 +20,13 @@ const useData = () => {
 	const router = useRouter();
 
 	const [error, setError] = useState<string | null>(null);
-	const [localisations, setLocalisations] = useState<number[]>([]);
+	const [locations, setLocations] = useState<number[]>([]);
 	const [school, setSchool] = useState<number>();
 	const [dpts, setDpts] = useState<City[]>([]);
 
 	const auth = useAppSelector(state => state.auth);
+
+	const [schools, setSchools] = useState<School[]>([]);
 
 	useEffect(() => {
 		if (auth.isLogged) {
@@ -35,24 +38,32 @@ const useData = () => {
 			router.push('/auth/signup/steps/1');
 			return;
 		}
+
+		(async () => {
+			try {
+				const request = await fetch(
+					'https://studentlink.etudiants.ynov-bordeaux.com/api/schools'
+				);
+
+				const schools = await request.json();
+
+				setSchools(schools);
+			} catch (error) {
+				console.error(error);
+			}
+		})();
 	}, []);
 
 	return {
 		error,
 		setError,
-		localisations,
-		setLocalisations,
+		locations,
+		setLocations,
 		school,
 		setSchool,
 		dpts,
 		setDpts,
-		schools: [
-			{
-				id: 1,
-				name: 'Bordeaux Ynov Campus',
-				address: '2 Esplanade de la Gare, 33110 Le Bouscat',
-			},
-		].map(x => ({ label: x.name, value: x.id })),
+		schools: schools.map(x => ({ label: x.name, value: x.id })),
 	};
 };
 

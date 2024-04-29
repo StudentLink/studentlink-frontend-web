@@ -74,7 +74,7 @@ const useActions = (setError: Dispatch<SetStateAction<string | null>>) => {
 
 		try {
 			const req = await fetch(
-				`https://studentlink.etudiants.ynov-bordeaux.com/api/users${cookies.get('token') ? '/me' : ''}`,
+				`https://studentlink.etudiants.ynov-bordeaux.com/api/users${cookies.get('token') ? `/${data.username}` : ''}`,
 				{
 					method: cookies.get('token') ? 'PUT' : 'POST',
 					headers: {

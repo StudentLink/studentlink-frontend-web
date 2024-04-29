@@ -1,11 +1,12 @@
+import School from '@customTypes/school';
 import { createSlice } from '@reduxjs/toolkit';
 
 interface AuthState {
 	displayname: string;
 	username: string;
 	email: string;
-	localisation: string[];
-	school: string;
+	locations: number[];
+	school: School | null;
 	isLogged: boolean;
 }
 
@@ -13,8 +14,8 @@ const initialState: AuthState = {
 	displayname: '',
 	username: '',
 	email: '',
-	localisation: [],
-	school: '',
+	locations: [],
+	school: null,
 	isLogged: false,
 };
 
