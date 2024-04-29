@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+@function darken($color, $amount) {
+	@return darken($color, $amount);
+}
+
+:root {
+	--blue: #5bc4f9;
+	--green: #79db00;
+	--pink: #ff0066;
+	--yellow: #ffde00;
+	--white: #e7e7e7;
+
+	--black-1: #0c1920;
+	--black-2: #17313f;
+	--black-3: #1c3b4b;
+	--black-4: #204457;
+	--black-5: #28566e;
+
+	--darken-blue: #2ab2f7;
+	--darken-green: #5da800;
+	--darken-pink: #cc0052;
+	--darken-yellow: #ccb200;
+	--darken-white: #cdcdcd;
+
+	--shadow: 0 3px 6px;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Montserrat', sans-serif;
+	color: var(--white);
+}
+
+.app {
+	width: 100svw;
+	min-height: 100svh;
+	background-color: var(--black-1);
+}

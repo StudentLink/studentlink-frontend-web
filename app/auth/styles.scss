@@ -1,0 +1,120 @@
+.container {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	gap: 25px;
+	padding: 35px 50px;
+	width: 95svw;
+	max-width: 650px;
+	border-radius: 12px;
+	background-color: var(--black-2);
+	box-shadow: var(--shadow) rgba(0, 0, 0, 0.2);
+
+	@media (max-width: 768px) {
+		padding: 35px;
+	}
+
+	& > .heading {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+
+		& > .title {
+			font-size: 2.5rem;
+			font-weight: 400;
+			color: var(--white);
+			user-select: none;
+		}
+
+		& > .subTitle {
+			font-size: 1rem;
+			font-weight: 400;
+			color: var(--darken-white);
+			user-select: none;
+		}
+	}
+
+	& > .inputsContainer {
+		display: flex;
+		flex-direction: column;
+		align-items: stretch;
+		gap: 10px;
+
+		.error {
+			color: var(--pink);
+		}
+
+		& > .rowInputs {
+			display: grid;
+			grid-template-columns: repeat(2, 1fr);
+			gap: 10px;
+
+			@media (max-width: 768px) {
+				grid-template-columns: 1fr;
+				grid-template-rows: repeat(2, 1fr);
+			}
+		}
+
+		& .inputBox {
+			position: relative;
+			display: flex;
+			justify-content: stretch;
+			align-items: stretch;
+			border: 2px solid var(--blue);
+			border-radius: 7px;
+			background-color: var(--black-3);
+
+			& > .input {
+				flex-grow: 1;
+				padding: 10px 15px;
+				border: none;
+				background: transparent;
+				font-size: 1rem;
+				color: var(--white);
+				outline: none;
+
+				&.noPadding {
+					padding: 0;
+				}
+
+				&::placeholder {
+					color: var(--blue);
+				}
+			}
+
+			& > .icon {
+				position: absolute;
+				z-index: 1;
+				top: 50%;
+				right: 9px;
+				transform: translateY(-50%);
+				font-size: 1.2rem;
+				color: var(--blue);
+				cursor: pointer;
+			}
+		}
+
+		& > .link {
+			width: max-content;
+			font-size: 0.9rem;
+			color: var(--blue);
+			text-decoration: none;
+			transition: filter 0.2s ease;
+			user-select: none;
+			outline: none;
+
+			&:hover {
+				filter: brightness(0.8);
+			}
+
+			&:focus {
+				filter: brightness(0.8);
+			}
+		}
+	}
+}

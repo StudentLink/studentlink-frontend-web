@@ -1,0 +1,11 @@
+{
+	"tabWidth": 4,
+	"useTabs": true,
+	"proseWrap": "never",
+	"jsxSingleQuote": true,
+	"singleQuote": true,
+	"singleAttributePerLine": true,
+	"arrowParens": "avoid",
+	"trailingComma": "es5",
+	"semi": true
+}
