@@ -52,7 +52,7 @@ const useData = () => {
 				console.error(error);
 			}
 		})();
-	}, []);
+	}, [auth.displayname, auth.email, auth.isLogged, auth.username, router]);
 
 	return {
 		error,

@@ -112,7 +112,7 @@ const Page = () => {
 				color='blue'
 				onClick={signUp}
 			>
-				Aller à l'étape 2
+				Aller à l&apos;étape 2
 			</Button>
 		</div>
 	);

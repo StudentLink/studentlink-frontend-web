@@ -119,7 +119,7 @@ const useData = (username: string) => {
 
 					setPosts(updatedPosts);
 
-					// fetchPosts(setPosts);
+					// useFetchPosts(setPosts);
 				} catch (error) {
 					console.error(error);
 					setError(
@@ -128,7 +128,7 @@ const useData = (username: string) => {
 				}
 			})();
 		}
-	}, []);
+	}, [cookies, posts.length, user, username]);
 
 	return {
 		user,
@@ -144,7 +144,7 @@ const getRandomArbitrary = (min: number, max: number): number => {
 	return Math.floor(Math.random() * (max - min) + min);
 };
 
-const fetchPosts = async (setPosts: Dispatch<SetStateAction<Post[]>>) => {
+const useFetchPosts = async (setPosts: Dispatch<SetStateAction<Post[]>>) => {
 	const username = useAppSelector(state => state.auth.username);
 
 	try {
@@ -163,7 +163,7 @@ const fetchPosts = async (setPosts: Dispatch<SetStateAction<Post[]>>) => {
 };
 
 const formatPost = (post: Post) => {
-	let result = post;
+	const result = post;
 
 	if (post.locations && post.locations.length > 0) {
 		result.locations = post.locations.map(x => {

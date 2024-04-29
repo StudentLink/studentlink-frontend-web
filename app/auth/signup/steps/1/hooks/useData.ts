@@ -14,7 +14,7 @@ const useData = () => {
 		if (auth.isLogged) {
 			router.push('/');
 		}
-	}, []);
+	}, [auth.isLogged, router]);
 
 	return { auth, pswdVisibility, setPswdVisibility, error, setError };
 };

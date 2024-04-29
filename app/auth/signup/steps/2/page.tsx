@@ -99,7 +99,7 @@ const Page = () => {
 				color='blue'
 				onClick={signUp}
 			>
-				S'inscrire
+				S&apos;inscrire
 			</Button>
 		</div>
 	);
