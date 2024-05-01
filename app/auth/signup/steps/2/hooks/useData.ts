@@ -34,7 +34,7 @@ const useData = () => {
 			return;
 		}
 
-		if (auth.displayname == '' && auth.username == '' && auth.email == '') {
+		if (auth.name == '' && auth.username == '' && auth.email == '') {
 			router.push('/auth/signup/steps/1');
 			return;
 		}
@@ -52,7 +52,7 @@ const useData = () => {
 				console.error(error);
 			}
 		})();
-	}, [auth.displayname, auth.email, auth.isLogged, auth.username, router]);
+	}, [auth.name, auth.email, auth.isLogged, auth.username, router]);
 
 	return {
 		error,

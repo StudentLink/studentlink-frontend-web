@@ -22,7 +22,7 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
 	const isLogged = useAppSelector(state => state.auth.isLogged);
 
 	useEffect(() => {
-		if (!router || !cookies || !path) {
+		if (!router || !cookies || !path || !dispatch) {
 			return;
 		}
 
@@ -30,7 +30,7 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
 			const token = cookies.get('token');
 
 			if (token) {
-				useGetUser(token, dispatch);
+				getUser(token, dispatch);
 			} else {
 				router.push('/auth/signin');
 			}
@@ -39,14 +39,14 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
 				router.push('/');
 			}
 		}
-	}, [cookies, router, path, isLogged]);
+	}, [cookies, router, path, isLogged, dispatch]);
 
 	return <>{children}</>;
 };
 
 export default Providers;
 
-const useGetUser = async (
+const getUser = async (
 	token: string,
 	dispatch: ThunkDispatch<
 		{
