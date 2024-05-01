@@ -1,22 +1,30 @@
 import School from '@customTypes/school';
 import { createSlice } from '@reduxjs/toolkit';
 
-interface AuthState {
-	displayname: string;
+export interface AuthState {
+	id: number;
+	name: string;
 	username: string;
 	email: string;
 	locations: number[];
 	school: School | null;
 	isLogged: boolean;
+	createdAt: string;
+	picture: string | null;
+	roles: string[];
 }
 
 const initialState: AuthState = {
-	displayname: '',
+	id: -1,
+	name: '',
 	username: '',
 	email: '',
 	locations: [],
 	school: null,
 	isLogged: false,
+	createdAt: '',
+	picture: null,
+	roles: [],
 };
 
 export const authSlice = createSlice({

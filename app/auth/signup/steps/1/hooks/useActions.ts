@@ -64,7 +64,7 @@ const useActions = (setError: Dispatch<SetStateAction<string | null>>) => {
 		setError(null);
 
 		const user = {
-			displayname: `${data.firstname[0].toUpperCase()}${data.firstname.slice(1)} ${data.lastname.toUpperCase()}`,
+			name: `${data.firstname[0].toUpperCase()}${data.firstname.slice(1)} ${data.lastname.toUpperCase()}`,
 			username: data.username,
 			email: data.email,
 			password: data.password,

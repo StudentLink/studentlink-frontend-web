@@ -36,7 +36,7 @@ const Page = () => {
 							id='lastname'
 							className='input'
 							placeholder='Nom'
-							defaultValue={auth.displayname.split(' ')[1]}
+							defaultValue={auth.name.split(' ')[1]}
 						/>
 					</div>
 					<div className='inputBox'>
@@ -45,7 +45,7 @@ const Page = () => {
 							id='firstname'
 							className='input'
 							placeholder='Prénom'
-							defaultValue={auth.displayname.split(' ')[0]}
+							defaultValue={auth.name.split(' ')[0]}
 						/>
 					</div>
 				</div>

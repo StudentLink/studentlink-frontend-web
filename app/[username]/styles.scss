@@ -1,163 +1,164 @@
-.loaderContainer {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-
-	& * {
-		color: var(--blue);
-	}
-}
-
-.error {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	font-size: 1.5rem;
-	font-weight: 700;
-	color: var(--pink);
-}
-
-.app {
+.profilePage {
 	display: flex;
 	justify-content: center;
 	padding-top: 100px;
-}
 
-.container {
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
-	gap: 50px;
+	& > .loaderContainer {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
 
-	& > .header {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		gap: 20px;
-		width: 100%;
-
-		& > .infos {
-			display: flex;
-			align-items: center;
-			gap: 20px;
-
-			& > .picture {
-				width: 100px;
-				height: 100px;
-				border-radius: 50%;
-			}
-
-			& > .col {
-				display: flex;
-				flex-direction: column;
-				gap: 5px;
-
-				& > .name {
-					font-size: 1.5rem;
-				}
-
-				& > .username {
-					font-size: 0.9rem;
-					color: var(--darken-white);
-				}
-
-				& > .school {
-					color: var(--blue);
-				}
-			}
-		}
-
-		& > .settingsContainer {
-			display: flex;
-			justify-content: flex-end;
-			height: 100%;
-			padding: 20px 0;
-
-			& > .settings {
-				$size: 25px;
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				width: $size;
-				height: $size;
-				transition: rotate 0.3s ease;
-
-				&:hover {
-					rotate: 90deg;
-				}
-
-				& > ion-icon {
-					width: 100%;
-					height: 100%;
-				}
-			}
+		& * {
+			color: var(--blue);
 		}
 	}
 
-	& > .postsContainer {
+	& > .loadingError {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		font-size: 1.5rem;
+		font-weight: 700;
+		color: var(--pink);
+	}
+
+	& > .container {
 		display: flex;
 		flex-direction: column;
-		gap: 20px;
+		align-items: flex-start;
+		gap: 50px;
 
-		& > .postsTitle {
-			font-size: 2rem;
-		}
-
-		& > .posts {
-			position: relative;
+		& > .header {
 			display: flex;
-			flex-wrap: wrap;
-			flex-direction: row;
+			justify-content: space-between;
+			align-items: center;
 			gap: 20px;
+			width: 100%;
 
-			@media (max-width: 768px) {
-				flex-direction: column;
-				flex-wrap: nowrap;
-				justify-content: flex-start;
-				align-items: center;
-			}
-
-			& > .post {
+			& > .infos {
 				display: flex;
-				flex-direction: column;
-				gap: 10px;
-				padding: 10px;
-				width: calc(50% - 10px);
-				border-radius: 7px;
-				background-color: var(--black-2);
+				align-items: center;
+				gap: 20px;
 
-				@media (max-width: 768px) {
-					width: 100%;
+				& > .picture {
+					width: 100px;
+					height: 100px;
+					border-radius: 50%;
 				}
 
-				& > .content {
-					color: var(--white);
-				}
-
-				& > .footer {
+				& > .col {
 					display: flex;
-					flex-wrap: nowrap;
-					justify-content: space-between;
-					align-items: center;
+					flex-direction: column;
+					gap: 5px;
 
-					& > .date,
-					& > .locations {
-						font-size: 0.8rem;
+					& > .name {
+						font-size: 1.5rem;
+					}
+
+					& > .username {
+						font-size: 0.9rem;
 						color: var(--darken-white);
+					}
+
+					& > .school {
+						color: var(--blue);
 					}
 				}
 			}
 
-			& > .noPosts {
-				position: absolute;
-				top: 0;
-				left: 50%;
-				transform: translateX(-50%);
-				width: max-content;
-				font-size: 1.2rem;
-				color: var(--darken-white);
+			& > .settingsContainer {
+				display: flex;
+				justify-content: flex-end;
+				gap: 10px;
+				padding: 20px 0;
+				height: 100%;
+
+				& > .settings {
+					$size: 25px;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					width: $size;
+					height: $size;
+					transition: rotate 0.3s ease;
+
+					&.rotate:hover {
+						rotate: 90deg;
+					}
+
+					& > ion-icon {
+						width: 100%;
+						height: 100%;
+					}
+				}
+			}
+		}
+
+		& > .postsContainer {
+			display: flex;
+			flex-direction: column;
+			gap: 20px;
+
+			& > .postsTitle {
+				font-size: 2rem;
+			}
+
+			& > .posts {
+				position: relative;
+				display: flex;
+				flex-wrap: wrap;
+				flex-direction: row;
+				gap: 20px;
+
+				@media (max-width: 768px) {
+					flex-direction: column;
+					flex-wrap: nowrap;
+					justify-content: flex-start;
+					align-items: center;
+				}
+
+				& > .post {
+					display: flex;
+					flex-direction: column;
+					gap: 10px;
+					padding: 10px;
+					width: calc(50% - 10px);
+					border-radius: 7px;
+					background-color: var(--black-2);
+
+					@media (max-width: 768px) {
+						width: 100%;
+					}
+
+					& > .content {
+						color: var(--white);
+					}
+
+					& > .footer {
+						display: flex;
+						flex-wrap: nowrap;
+						justify-content: space-between;
+						align-items: center;
+
+						& > .date,
+						& > .locations {
+							font-size: 0.8rem;
+							color: var(--darken-white);
+						}
+					}
+				}
+
+				& > .noPosts {
+					position: absolute;
+					top: 0;
+					left: 50%;
+					transform: translateX(-50%);
+					width: max-content;
+					font-size: 1.2rem;
+					color: var(--darken-white);
+				}
 			}
 		}
 	}
