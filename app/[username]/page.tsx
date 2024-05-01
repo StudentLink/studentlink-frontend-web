@@ -10,14 +10,15 @@ import { useCookies } from 'next-client-cookies';
 import Loader from '@components/Loader/Loader';
 
 // ------------------------------------------------------ Hooks --------------------------------------------------------
+import { useAppDispatch } from '@lib/hooks';
+import { setIsLogged } from '@lib/features/auth/authSlice';
 import useData from './hooks/useData';
 
 // ------------------------------------------------- Assets & Styles ---------------------------------------------------
 import { IonIcon } from '@ionic/react';
 import { logOutOutline, settingsOutline } from 'ionicons/icons';
 import './styles.scss';
-import { useAppDispatch } from '@lib/hooks';
-import { setIsLogged } from '@lib/features/auth/authSlice';
+import { getCityFromInsee } from '@utils/cities';
 
 const Profile = ({ params }: { params: { username: string } }) => {
 	const { username } = params;
@@ -56,11 +57,16 @@ const Profile = ({ params }: { params: { username: string } }) => {
 								<p className='name'>{user.name}</p>
 								<p className='username'>@{user.username}</p>
 								<Link
-									href={`/school`}
+									href={`/school/${user.school.id}`}
 									className='school'
 								>
 									{user.school.name}
 								</Link>
+								<p className='username'>
+									{user.locations
+										.map(x => getCityFromInsee(x))
+										.join(', ')}
+								</p>
 							</div>
 						</div>
 
@@ -96,9 +102,8 @@ const Profile = ({ params }: { params: { username: string } }) => {
 										</p>
 										<div className='footer'>
 											<p className='locations'>
-												{post.locations &&
-												post.locations.length > 0
-													? post.locations?.join(', ')
+												{post.location
+													? post.location
 													: 'France'}
 											</p>
 											<p className='date'>

@@ -100,9 +100,14 @@
 			display: flex;
 			flex-direction: column;
 			gap: 20px;
+			padding: 20px;
+			width: 100%;
+			border-radius: 12px;
+			background-color: var(--black-2);
 
 			& > .postsTitle {
 				font-size: 2rem;
+				border-bottom: 1px solid var(--black-4);
 			}
 
 			& > .posts {
@@ -111,6 +116,7 @@
 				flex-wrap: wrap;
 				flex-direction: row;
 				gap: 20px;
+				padding-bottom: 10px;
 
 				@media (max-width: 768px) {
 					flex-direction: column;
@@ -126,7 +132,7 @@
 					padding: 10px;
 					width: calc(50% - 10px);
 					border-radius: 7px;
-					background-color: var(--black-2);
+					background-color: var(--black-3);
 
 					@media (max-width: 768px) {
 						width: 100%;
@@ -151,12 +157,9 @@
 				}
 
 				& > .noPosts {
-					position: absolute;
-					top: 0;
-					left: 50%;
-					transform: translateX(-50%);
-					width: max-content;
+					width: 100%;
 					font-size: 1.2rem;
+					text-align: center;
 					color: var(--darken-white);
 				}
 			}
