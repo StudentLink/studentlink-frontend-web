@@ -1,4 +1,4 @@
-.app {
+.profilePage {
 	display: flex;
 	justify-content: center;
 	padding-top: 100px;
@@ -71,8 +71,9 @@
 			& > .settingsContainer {
 				display: flex;
 				justify-content: flex-end;
-				height: 100%;
+				gap: 10px;
 				padding: 20px 0;
+				height: 100%;
 
 				& > .settings {
 					$size: 25px;
@@ -83,7 +84,7 @@
 					height: $size;
 					transition: rotate 0.3s ease;
 
-					&:hover {
+					&.rotate:hover {
 						rotate: 90deg;
 					}
 

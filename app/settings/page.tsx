@@ -30,7 +30,7 @@ const Settings = () => {
 	const [popupType, setPopupType] = useState<string | null>(null);
 
 	return (
-		<>
+		<div className='settingsPage'>
 			<section className='settingsContainer'>
 				<div className='settings'>
 					<p className='title'>
@@ -87,7 +87,7 @@ const Settings = () => {
 					setPopupType={setPopupType}
 				/>
 			)}
-		</>
+		</div>
 	);
 };
 

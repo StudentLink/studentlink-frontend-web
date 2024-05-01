@@ -1,7 +1,7 @@
 import School from '@customTypes/school';
 import { createSlice } from '@reduxjs/toolkit';
 
-interface AuthState {
+export interface AuthState {
 	id: number;
 	name: string;
 	username: string;

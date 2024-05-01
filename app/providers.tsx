@@ -1,15 +1,17 @@
 'use client';
 
 // ------------------------------------------------------ Next ---------------------------------------------------------
+import { useEffect } from 'react';
 import { useCookies } from 'next-client-cookies';
 import { usePathname, useRouter } from 'next/navigation';
 
 // ------------------------------------------------------ Hooks --------------------------------------------------------
-import { useAppDispatch } from '@lib/hooks';
-import { setAuth, setIsLogged } from '@lib/features/auth/authSlice';
+import { useAppDispatch, useAppSelector } from '@lib/hooks';
+import { AuthState, setAuth, setIsLogged } from '@lib/features/auth/authSlice';
 
 // ------------------------------------------------------ Utils --------------------------------------------------------
 import { jwtDecode } from 'jwt-decode';
+import { Dispatch, ThunkDispatch, UnknownAction } from '@reduxjs/toolkit';
 
 const Providers = ({ children }: { children: React.ReactNode }) => {
 	const dispatch = useAppDispatch();
@@ -17,24 +19,44 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
 	const cookies = useCookies();
 	const path = usePathname();
 
-	if (!path.startsWith('/auth')) {
-		const token = cookies.get('token');
+	const isLogged = useAppSelector(state => state.auth.isLogged);
 
-		if (token) {
-			dispatch(setIsLogged(true));
-			useGetUser(token);
-		} else {
-			router.push('/auth/signin');
+	useEffect(() => {
+		if (!router || !cookies || !path) {
+			return;
 		}
-	}
+
+		if (!path.startsWith('/auth')) {
+			const token = cookies.get('token');
+
+			if (token) {
+				useGetUser(token, dispatch);
+			} else {
+				router.push('/auth/signin');
+			}
+		} else {
+			if (isLogged) {
+				router.push('/');
+			}
+		}
+	}, [cookies, router, path, isLogged]);
 
 	return <>{children}</>;
 };
 
 export default Providers;
 
-const useGetUser = async (token: string) => {
-	const dispatch = useAppDispatch();
+const useGetUser = async (
+	token: string,
+	dispatch: ThunkDispatch<
+		{
+			auth: AuthState;
+		},
+		undefined,
+		UnknownAction
+	> &
+		Dispatch<UnknownAction>
+) => {
 	const userId = jwtDecode(token).sub;
 
 	if (!userId) return;
