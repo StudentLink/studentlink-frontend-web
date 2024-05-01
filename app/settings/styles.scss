@@ -1,0 +1,154 @@
+.app {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding-top: 100px;
+
+	& > .settingsContainer {
+		display: flex;
+		flex-direction: column;
+		gap: 50px;
+		width: 95svw;
+		max-width: 600px;
+
+		& > .settings {
+			display: flex;
+			flex-direction: column;
+			gap: 30px;
+			padding: 20px;
+			border-radius: 7px;
+			background-color: var(--black-2);
+
+			& > .title {
+				display: flex;
+				align-items: center;
+				gap: 10px;
+				font-size: 2rem;
+
+				& > .backButton {
+					display: flex;
+				}
+			}
+
+			& > .container {
+				display: flex;
+				flex-direction: column;
+				align-items: stretch;
+				gap: 20px;
+
+				& > .fakeInput {
+					position: relative;
+					padding: 7.5px 12.5px;
+					border-radius: 7px;
+					background: var(--black-3);
+					width: 100%;
+					overflow: hidden;
+
+					& > .overlayButton {
+						position: absolute;
+						top: 0;
+						left: 0;
+						display: flex;
+						justify-content: center;
+						align-items: center;
+						gap: 5px;
+						width: 100%;
+						height: 100%;
+						background-color: rgba($color: #000000, $alpha: 0.4);
+						backdrop-filter: blur(1px);
+						color: var(--darken-white);
+						transition: background-color 0.3s ease;
+
+						&:hover {
+							background-color: rgba(
+								$color: #000000,
+								$alpha: 0.5
+							);
+						}
+					}
+				}
+			}
+		}
+	}
+
+	& > .settingsPopupOverlay {
+		z-index: 1;
+		position: fixed;
+		top: 0;
+		left: 0;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 100svw;
+		height: 100svh;
+		background-color: rgba($color: #000000, $alpha: 0.4);
+		backdrop-filter: blur(4px);
+
+		& > .settingsPopup {
+			display: flex;
+			flex-direction: column;
+			align-items: stretch;
+			width: 95svw;
+			max-width: 500px;
+			border-radius: 12px;
+			background-color: var(--black-2);
+			overflow: hidden;
+
+			& > .header {
+				display: flex;
+				flex-wrap: nowrap;
+				justify-content: space-between;
+				align-items: center;
+				gap: 20px;
+				padding: 15px;
+				border-bottom: 1px solid var(--black-3);
+
+				& > .title {
+					display: flex;
+					align-items: center;
+					gap: 5px;
+					font-size: 1.5rem;
+				}
+
+				& > .closeButton {
+					display: flex;
+					justify-content: center;
+					align-items: center;
+
+					& > ion-icon {
+						width: 1.7rem;
+						height: 1.7rem;
+					}
+				}
+			}
+
+			& > .content {
+				display: flex;
+				flex-direction: column;
+				gap: 20px;
+				padding: 15px;
+
+				& > .error {
+					width: 100%;
+					font-weight: 600;
+					text-align: center;
+					color: var(--pink);
+				}
+
+				& > .input {
+					padding: 10px 15px;
+					border: 2px solid var(--blue);
+					border-radius: 7px;
+					background-color: var(--black-3);
+					font-size: 1rem;
+					color: var(--blue);
+					outline: none;
+
+					&::placeholder {
+						color: var(--blue);
+					}
+				}
+			}
+		}
+	}
+}

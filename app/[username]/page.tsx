@@ -28,7 +28,7 @@ const Profile = ({ params }: { params: { username: string } }) => {
 	}
 
 	if (error) {
-		return <p className='error'>{error}</p>;
+		return <p className='loadingError'>{error}</p>;
 	}
 
 	return (
