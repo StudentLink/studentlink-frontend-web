@@ -1,12 +1,17 @@
+// ---------------------------------------------------------------------------------------------------------------------
+//!                                                       Imports
+// ---------------------------------------------------------------------------------------------------------------------
+
+// -------------------------------------------------- React & Next -----------------------------------------------------
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useCookies } from 'next-client-cookies';
-import User from '@customTypes/user';
-import Post from '@customTypes/post';
-import cities from '@/utils/cities.json';
-import City from '@customTypes/city';
+
+// ------------------------------------------------------ Utils --------------------------------------------------------
 import { jwtDecode } from 'jwt-decode';
 import { formatDate } from '@utils/date';
 import { getCityFromInsee } from '@utils/cities';
+import User from '@customTypes/user';
+import Post from '@customTypes/post';
 
 const colors = ['2ab2f7', '5da800', 'cc0052', 'ccb200'];
 
@@ -18,7 +23,9 @@ const useData = (username: string) => {
 	const [posts, setPosts] = useState<Post[]>([]);
 	const [isSelf, setIsSelf] = useState<boolean>(false);
 
-	useFetchPosts(posts, setPosts, username, cookies.get('token') ?? '');
+	useEffect(() => {
+		useFetchPosts(setPosts, username, cookies.get('token') ?? '');
+	}, []);
 
 	useEffect(() => {
 		if (!user && posts.length == 0) {
@@ -84,7 +91,6 @@ const getRandomArbitrary = (min: number, max: number): number => {
 };
 
 const useFetchPosts = async (
-	posts: Post[],
 	setPosts: Dispatch<SetStateAction<Post[]>>,
 	username: string,
 	token: string
