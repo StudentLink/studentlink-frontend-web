@@ -49,8 +49,6 @@ const useData = (post: Post, previewComments: boolean) => {
 					}
 				}
 
-				console.log(comments[0].createdAt);
-
 				setFormattedComments(comments);
 			}
 		})();

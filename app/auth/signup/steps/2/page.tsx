@@ -9,7 +9,7 @@ import Select from 'react-select';
 import Button from '@components/Button/Button';
 
 // ----------------------------------------------------- Styles --------------------------------------------------------
-import selectStyle from '../selectStyle';
+import selectStyle from '@/styles/selectStyle';
 import '../../../styles.scss';
 import { IonIcon } from '@ionic/react';
 import { chevronBackOutline } from 'ionicons/icons';

@@ -7,6 +7,63 @@
 	width: 100%;
 	max-width: 700px;
 
+	& > .createContainer {
+		z-index: 2;
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		align-items: stretch;
+		gap: 10px;
+		padding: 15px;
+		width: 100%;
+		border-radius: 7px;
+		background-color: var(--black-2);
+
+		& > .createInput {
+			padding: 10px;
+			border: 1px solid var(--black-3);
+			border-radius: 7px;
+			background-color: var(--black-3);
+			font-size: 1rem;
+			color: var(--white);
+			outline: none;
+			overflow: hidden;
+			resize: none;
+			white-space: pre;
+
+			&[contenteditable]:empty::before {
+				content: 'Commence un post';
+				color: var(--darken-white);
+			}
+		}
+
+		& > .createFooter {
+			display: flex;
+			flex-wrap: nowrap;
+			justify-content: space-between;
+			align-items: center;
+			gap: 15px;
+
+			& > .createButton {
+				display: flex;
+				flex-wrap: nowrap;
+				justify-content: center;
+				align-items: center;
+				gap: 5px;
+				padding: 5px 15px;
+				border-radius: 5px;
+				background-color: var(--black-4);
+				font-size: 1rem;
+				color: var(--white);
+				transition: filter 0.3s ease;
+
+				&:hover {
+					filter: brightness(1.1);
+				}
+			}
+		}
+	}
+
 	& > .postsContainer {
 		display: flex;
 		flex-direction: column;

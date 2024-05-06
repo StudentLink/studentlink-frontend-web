@@ -77,7 +77,7 @@ const Post = ({
 					<div className='postComments'>
 						{formattedComments.map(comment => (
 							<div
-								key={comment.id}
+								key={`post#${post.id}:comment#${comment.id}`}
 								className='post'
 							>
 								<div className='postHeader'>
