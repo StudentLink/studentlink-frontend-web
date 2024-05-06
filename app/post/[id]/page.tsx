@@ -36,7 +36,10 @@ const Page = ({ params }: { params: { id: string } }) => {
 	return (
 		post && (
 			<div className='postPageContainer'>
-				<Post post={post} />
+				<Post
+					post={post}
+					canComment
+				/>
 			</div>
 		)
 	);

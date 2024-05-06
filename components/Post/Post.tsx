@@ -2,9 +2,11 @@
 //!                                                       Imports
 // ---------------------------------------------------------------------------------------------------------------------
 
-// ------------------------------------------------------ Next ---------------------------------------------------------
+// -------------------------------------------------- React & Next -----------------------------------------------------
+import { useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useCookies } from 'next-client-cookies';
 
 // ------------------------------------------------------ Hooks --------------------------------------------------------
 import useData from './hooks/useData';
@@ -17,19 +19,59 @@ import { formatDate } from '@utils/date';
 // ------------------------------------------------- Assets & Styles ---------------------------------------------------
 import './styles.scss';
 import { IonIcon } from '@ionic/react';
-import { chatbubbleOutline } from 'ionicons/icons';
+import { chatbubbleOutline, sendOutline } from 'ionicons/icons';
 
 const Post = ({
 	post,
 	previewComments,
+	canComment,
 }: {
 	post: PostType;
 	previewComments?: true;
+	canComment?: true;
 }) => {
+	const commentInputRef = useRef<HTMLSpanElement>(null);
+	const cookies = useCookies();
+
 	const { formattedComments, profileImage } = useData(
 		post,
 		previewComments ?? false
 	);
+
+	const postComment = async () => {
+		if (!commentInputRef.current) {
+			return;
+		}
+
+		if (
+			!commentInputRef.current.textContent ||
+			commentInputRef.current.textContent.length == 0
+		) {
+			return;
+		}
+
+		try {
+			const response = await fetch(
+				'https://studentlink.etudiants.ynov-bordeaux.com/api/comments',
+				{
+					method: 'POST',
+					headers: {
+						Authorization: `Bearer ${cookies.get('token')}`,
+					},
+					body: JSON.stringify({
+						content: commentInputRef.current.textContent,
+						post: post.id,
+					}),
+				}
+			);
+
+			const comment = await response.json();
+
+			post.comments.push(comment);
+		} catch (error) {
+			console.error(error);
+		}
+	};
 
 	return (
 		profileImage && (
@@ -73,43 +115,60 @@ const Post = ({
 						<p className='postDate'>{formatDate(post.createdAt)}</p>
 					</div>
 				</div>
-				{formattedComments.length > 0 && (
+
+				{(formattedComments.length > 0 || canComment) && (
 					<div className='postComments'>
-						{formattedComments.map(comment => (
-							<div
-								key={`post#${post.id}:comment#${comment.id}`}
-								className='post'
-							>
-								<div className='postHeader'>
-									<Image
-										src={comment.user.picture ?? ''}
-										alt='picture'
-										width={200}
-										height={200}
-										className='profilePicture'
-									/>
-									<div className='postHeaderInfos'>
-										<Link
-											href={`/${comment.user.username}`}
-											className='username'
-										>
-											{comment.user.name}
-											<span className='userAt'>
-												@{comment.user.username}
-											</span>
-										</Link>
+						{canComment && (
+							<div className='sendCommentContainer'>
+								<span
+									ref={commentInputRef}
+									className='commentInput'
+									contentEditable
+								></span>
+								<button
+									className='sendComment'
+									onClick={postComment}
+								>
+									<IonIcon icon={sendOutline} />
+								</button>
+							</div>
+						)}
+						{formattedComments.length > 0 &&
+							formattedComments.map(comment => (
+								<div
+									key={`post#${post.id}:comment#${comment.id}`}
+									className='post'
+								>
+									<div className='postHeader'>
+										<Image
+											src={comment.user.picture ?? ''}
+											alt='picture'
+											width={200}
+											height={200}
+											className='profilePicture'
+										/>
+										<div className='postHeaderInfos'>
+											<Link
+												href={`/${comment.user.username}`}
+												className='username'
+											>
+												{comment.user.name}
+												<span className='userAt'>
+													@{comment.user.username}
+												</span>
+											</Link>
+										</div>
+									</div>
+									<p className='commentContent'>
+										{comment.content}
+									</p>
+									<div className='postFooter'>
+										<p className='postDate'>
+											{formatDate(comment.createdAt)}
+										</p>
 									</div>
 								</div>
-								<p className='commentContent'>
-									{comment.content}
-								</p>
-								<div className='postFooter'>
-									<p className='postDate'>
-										{formatDate(comment.createdAt)}
-									</p>
-								</div>
-							</div>
-						))}
+							))}
 					</div>
 				)}
 			</div>

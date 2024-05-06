@@ -88,6 +88,45 @@
 		border-bottom-right-radius: 7px;
 		background-color: var(--black-2);
 
+		& > .sendCommentContainer {
+			display: flex;
+			flex-wrap: nowrap;
+			align-items: center;
+			gap: 10px;
+			padding: 10px;
+
+			& > .commentInput {
+				flex-grow: 1;
+				padding: 5px 15px;
+				border: 1px solid var(--black-5);
+				border-radius: calc(1em + 10px);
+				font-size: 0.85rem;
+				outline: none;
+
+				&:empty:before {
+					content: 'Commenter';
+					color: var(--darken-white);
+				}
+			}
+
+			& > .sendComment {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				padding: 7px;
+				border: 1px solid var(--white);
+				border-radius: 50%;
+				transition:
+					background-color 0.3s ease,
+					border-color 0.3s ease;
+
+				&:hover {
+					background-color: var(--darken-blue);
+					border-color: var(--darken-blue);
+				}
+			}
+		}
+
 		& > .post {
 			background-color: transparent;
 
