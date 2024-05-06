@@ -16,40 +16,25 @@ export const feedSlice = createSlice({
 	initialState,
 	reducers: {
 		setType(state, action) {
-			const { type, token } = action.payload;
+			return {
+				...state,
+				type: action.payload,
+			};
+		},
 
-			if (!type || !token) {
+		setPosts(state, action) {
+			if (!Array.isArray(action.payload)) {
 				return state;
 			}
 
-			// try {
-			// 	fetch(`https://studentlink.etudiants.ynov-bordeaux.com/api/${type != 'global' ? type : ''}`, {
-			// 		headers: {
-			// 			Authorization: token,
-			// 		}
-			// 	}).then(response => response.json()).then(data => {
-			// 		return {
-			// 			...state,
-			// 		}
-			// 	});
-
-			// 	return {
-			// 		...state,
-			// 		type: type,
-			// 	};
-			// } catch (error) {
-			// 	console.error(error);
-			// }
-
 			return {
 				...state,
-				type: type,
+				posts: action.payload,
 			};
-			return state;
 		},
 	},
 });
 
-export const { setType } = feedSlice.actions;
+export const { setType, setPosts } = feedSlice.actions;
 
 export default feedSlice.reducer;

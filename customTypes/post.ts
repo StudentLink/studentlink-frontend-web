@@ -1,5 +1,6 @@
 import User from './user';
 import School from './school';
+import Comment from './Comment';
 
 type Post = {
 	id: number;
@@ -8,6 +9,7 @@ type Post = {
 	location: string | number | null;
 	user: User;
 	createdAt: string;
+	comments: Comment[];
 };
 
 export default Post;

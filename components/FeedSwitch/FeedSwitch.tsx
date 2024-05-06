@@ -8,10 +8,11 @@ import { useCookies } from 'next-client-cookies';
 
 // ------------------------------------------------------ Hooks --------------------------------------------------------
 import { useAppDispatch, useAppSelector } from '@lib/hooks';
-import { setType } from '@lib/features/feed/feedSlice';
+import { setPosts, setType } from '@lib/features/feed/feedSlice';
 
 // ----------------------------------------------------- Styles --------------------------------------------------------
 import './styles.scss';
+import Post from '@customTypes/post';
 
 const FeedSwitch = () => {
 	const dispatch = useAppDispatch();
@@ -20,18 +21,30 @@ const FeedSwitch = () => {
 	const [selectedRef, setSelectedRef] = useState<HTMLButtonElement | null>(
 		null
 	);
+	const containerRef = useRef<HTMLDivElement>(null);
 	const selectedIndicatorRef = useRef<HTMLDivElement>(null);
 	const type = useAppSelector(state => state.feed.type);
 
+	// Simulate a click to get some posts at page load
 	useEffect(() => {
-		if (selectedRef && selectedIndicatorRef.current) {
+		handleClick('global');
+	}, []);
+
+	useEffect(() => {
+		if (
+			selectedRef &&
+			selectedIndicatorRef.current &&
+			containerRef.current
+		) {
+			const containerBounds =
+				containerRef.current.getBoundingClientRect();
 			const bounds = selectedRef.getBoundingClientRect();
 			selectedIndicatorRef.current.setAttribute(
 				'style',
-				`left: ${bounds.left - 4}px; width: ${bounds.width + 8}px`
+				`left: ${bounds.left - containerBounds.left - 4}px; width: ${bounds.width + 8}px`
 			);
 		}
-	}, [selectedRef, selectedIndicatorRef]);
+	}, [selectedRef, selectedIndicatorRef.current, containerRef.current]);
 
 	useEffect(() => {
 		const buttons: NodeListOf<HTMLButtonElement> =
@@ -46,44 +59,47 @@ const FeedSwitch = () => {
 		}
 	}, [type]);
 
+	const handleClick = async (type: 'global' | 'school' | 'locations') => {
+		dispatch(setType(type));
+
+		try {
+			const feedRequest = await fetch(
+				`https://studentlink.etudiants.ynov-bordeaux.com/api/feed${type != 'global' ? `/${type}` : ''}`,
+				{
+					headers: {
+						Authorization: `Bearer ${cookies.get('token')}`,
+					},
+				}
+			);
+
+			const feedData: Post[] = await feedRequest.json();
+
+			dispatch(setPosts(feedData));
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
 	return (
-		<div className='feedSwitch'>
+		<div
+			ref={containerRef}
+			className='feedSwitch'
+		>
 			<button
 				className='feedOption'
-				onClick={() =>
-					dispatch(
-						setType({
-							type: 'global',
-							token: cookies.get('token'),
-						})
-					)
-				}
+				onClick={() => handleClick('global')}
 			>
 				Global
 			</button>
 			<button
 				className='feedOption'
-				onClick={() =>
-					dispatch(
-						setType({
-							type: 'school',
-							token: cookies.get('token'),
-						})
-					)
-				}
+				onClick={() => handleClick('school')}
 			>
 				École
 			</button>
 			<button
 				className='feedOption'
-				onClick={() =>
-					dispatch(
-						setType({
-							type: 'locations',
-							token: cookies.get('token'),
-						})
-					)
-				}
+				onClick={() => handleClick('locations')}
 			>
 				Autour de moi
 			</button>
