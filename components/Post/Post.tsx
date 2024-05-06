@@ -105,13 +105,20 @@ const Post = ({
 					<div className='postSeparator' />
 					<div className='postContent'>{post.content}</div>
 					<div className='postFooter'>
-						<Link
-							href={`/post/${post.id}`}
-							className='comments'
-						>
-							<IonIcon icon={chatbubbleOutline} />
-							{post.comments.length}
-						</Link>
+						{previewComments ? (
+							<Link
+								href={`/post/${post.id}`}
+								className='comments'
+							>
+								<IonIcon icon={chatbubbleOutline} />
+								{post.comments.length}
+							</Link>
+						) : (
+							<div className='comments'>
+								<IonIcon icon={chatbubbleOutline} />
+								{post.comments.length}
+							</div>
+						)}
 						<p className='postDate'>{formatDate(post.createdAt)}</p>
 					</div>
 				</div>

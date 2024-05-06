@@ -6,6 +6,9 @@ import PostType from '@customTypes/post';
 import Post from '@components/Post/Post';
 
 import './styles.scss';
+import Link from 'next/link';
+import { IonIcon } from '@ionic/react';
+import { chevronBackOutline } from 'ionicons/icons';
 
 const Page = ({ params }: { params: { id: string } }) => {
 	const { id } = params;
@@ -36,6 +39,9 @@ const Page = ({ params }: { params: { id: string } }) => {
 	return (
 		post && (
 			<div className='postPageContainer'>
+				<Link href={'/'}>
+					<IonIcon icon={chevronBackOutline} />
+				</Link>
 				<Post
 					post={post}
 					canComment
