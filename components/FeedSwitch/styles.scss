@@ -1,0 +1,26 @@
+.feedSwitch {
+	position: relative;
+	display: flex;
+	flex-wrap: nowrap;
+	gap: 15px;
+	padding: 10px 15px;
+
+	& > .feedOption {
+		font-size: 1rem;
+		color: var(--darken-white);
+		transition: color 0.3s ease;
+	}
+
+	& > .feedSelected {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 1px;
+		height: 2px;
+		border-radius: 2px;
+		background-color: var(--blue);
+		transition:
+			left 0.3s ease-in-out,
+			width 0.3s ease-in-out;
+	}
+}
