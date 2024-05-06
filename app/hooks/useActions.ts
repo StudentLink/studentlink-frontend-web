@@ -4,29 +4,38 @@ import City from '@customTypes/city';
 import cities from '@utils/cities.json';
 
 const useActions = (
-	setDpts: Dispatch<SetStateAction<City[]>>,
 	postRef: RefObject<HTMLTextAreaElement>,
 	cookies: Cookies,
-	location: string | null
+	setSelectData: Dispatch<SetStateAction<any[]>>,
+	selectValue: string | null,
+	feedType: 'global' | 'school' | 'locations'
 ) => {
 	const searchCities = (value: string) => {
 		if (value.length < 2) {
-			setDpts([]);
+			setSelectData([]);
 			return;
 		}
 
-		setDpts(
-			(cities as City[]).filter(city => city.zip_code.startsWith(value))
+		setSelectData(
+			(cities as City[])
+				.filter(city => city.zip_code.startsWith(value))
+				.map(x => ({
+					label: `${x.zip_code} - ${x.label
+						.split(' ')
+						.map(y => `${y[0].toUpperCase()}${y.slice(1)}`)
+						.join(' ')}`,
+					value: parseInt(x.insee_code),
+				}))
 		);
 	};
 
 	const sendPost = async () => {
-		if (!postRef.current || !location) {
+		if (!postRef.current || !selectValue) {
 			return;
 		}
 
 		try {
-			const createRequest = await fetch(
+			await fetch(
 				'https://studentlink.etudiants.ynov-bordeaux.com/api/posts',
 				{
 					method: 'POST',
@@ -35,14 +44,11 @@ const useActions = (
 					},
 					body: JSON.stringify({
 						content: postRef.current.textContent,
-						location: location,
+						[feedType == 'global' ? 'location' : feedType]:
+							selectValue,
 					}),
 				}
 			);
-
-			const createResponse = await createRequest.json();
-
-			console.log(createResponse);
 		} catch (error) {
 			console.error(error);
 		}

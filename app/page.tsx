@@ -5,7 +5,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 
 // -------------------------------------------------- React & Next -----------------------------------------------------
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useCookies } from 'next-client-cookies';
 
 // ------------------------------------------------------ Hooks --------------------------------------------------------
@@ -25,19 +25,47 @@ import { sendOutline } from 'ionicons/icons';
 import selectStyle from '@/styles/selectStyle';
 import './styles.scss';
 import useActions from './hooks/useActions';
+import School from '@customTypes/school';
 
 const Feed = () => {
 	const cookies = useCookies();
+
 	const postRef = useRef<HTMLTextAreaElement>(null);
+
 	const posts = useAppSelector(state => state.feed.posts);
-	const [dpts, setDpts] = useState<City[]>([]);
-	const [location, setLocation] = useState<string | null>(null);
+	const feedType = useAppSelector(state => state.feed.type);
+
+	const [selectData, setSelectData] = useState<any[]>([]);
+	const [selectValue, setSelectValue] = useState<string | null>(null);
+	const [schools, setSchools] = useState<any[]>([]);
+
+	useEffect(() => {
+		(async () => {
+			try {
+				const request = await fetch(
+					'https://studentlink.etudiants.ynov-bordeaux.com/api/schools'
+				);
+
+				const schools = await request.json();
+
+				setSchools(
+					schools.map((x: School) => ({
+						label: x.name,
+						value: x.id,
+					}))
+				);
+			} catch (error) {
+				console.error(error);
+			}
+		})();
+	}, []);
 
 	const { sendPost, searchCities } = useActions(
-		setDpts,
 		postRef,
 		cookies,
-		location
+		setSelectData,
+		selectValue,
+		feedType
 	);
 
 	return (
@@ -51,30 +79,42 @@ const Feed = () => {
 					contentEditable
 				/>
 				<div className='createFooter'>
-					<Select
-						options={dpts.map(x => ({
-							label: `${x.zip_code} - ${x.label
-								.split(' ')
-								.map(y => `${y[0].toUpperCase()}${y.slice(1)}`)
-								.join(' ')}`,
-							value: parseInt(x.insee_code),
-						}))}
-						closeMenuOnSelect={false}
-						noOptionsMessage={() => <span>Aucune option</span>}
-						styles={{
-							...selectStyle,
-							container: (base, _) => ({
-								...base,
-								width: '100%',
-							}),
-						}}
-						placeholder="Tu parles d'où ? (code postal)"
-						className='input noPadding'
-						onInputChange={value => searchCities(value)}
-						onChange={({ value }) => {
-							setLocation(value);
-						}}
-					/>
+					{feedType != 'school' ? (
+						<Select
+							options={selectData}
+							noOptionsMessage={() => <span>Aucune option</span>}
+							placeholder={"Tu parles d'où ? (code postal)"}
+							className='input noPadding'
+							styles={{
+								...selectStyle,
+								container: (base, _) => ({
+									...base,
+									width: '100%',
+								}),
+							}}
+							onInputChange={value => searchCities(value)}
+							onChange={({ value }: any) => {
+								setSelectValue(value);
+							}}
+						/>
+					) : (
+						<Select
+							options={schools}
+							noOptionsMessage={() => <span>Aucune option</span>}
+							placeholder={'De quelle école tu parles ?'}
+							className='input noPadding'
+							styles={{
+								...selectStyle,
+								container: (base, _) => ({
+									...base,
+									width: '100%',
+								}),
+							}}
+							onChange={({ value }: any) => {
+								setSelectValue(value);
+							}}
+						/>
+					)}
 
 					<button
 						className='createButton'
