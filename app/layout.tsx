@@ -3,6 +3,7 @@ import '@styles/globals.scss';
 import StoreProvider from './StoreProvider';
 import Providers from './providers';
 import { CookiesProvider } from 'next-client-cookies/server';
+import Navbar from '@components/Navbar/Navbar';
 
 export const metadata: Metadata = {
 	// metadataBase: new URL('')
@@ -32,7 +33,10 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
 				<main className='app dark text-foreground bg-background'>
 					<StoreProvider>
 						<CookiesProvider>
-							<Providers>{children}</Providers>
+							<Providers>
+								<Navbar />
+								<div className='pageContainer'>{children}</div>
+							</Providers>
 						</CookiesProvider>
 					</StoreProvider>
 				</main>

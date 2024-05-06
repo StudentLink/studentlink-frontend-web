@@ -43,7 +43,17 @@ body {
 }
 
 .app {
+	display: flex;
+	flex-wrap: nowrap;
 	width: 100svw;
 	min-height: 100svh;
 	background-color: var(--black-1);
+	overflow: hidden;
+
+	& > .pageContainer {
+		flex-grow: 1;
+		padding: 20px 50px;
+		height: 100svh;
+		overflow-y: auto;
+	}
 }

@@ -1,0 +1,46 @@
+.navbar {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	gap: 10px;
+	padding: 30px;
+	width: max-content;
+	height: 100svh;
+	border-top-right-radius: 12px;
+	border-bottom-right-radius: 12px;
+	background-color: var(--black-2);
+
+	& > .navHeader {
+		width: 200px;
+	}
+
+	& > .navContent {
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
+
+		& > .navLink {
+			display: flex;
+			flex-wrap: nowrap;
+			justify-content: center;
+			align-items: center;
+			gap: 10px;
+			font-size: 1.3rem;
+			color: var(--white);
+			transition: color 0.3s ease;
+
+			& > * {
+				transition: color 0.3s ease;
+			}
+
+			&:hover {
+				color: var(--darken-blue);
+
+				& > * {
+					color: var(--darken-blue);
+				}
+			}
+		}
+	}
+}
