@@ -22,7 +22,7 @@ const useData = (id: string) => {
 	const [posts, setPosts] = useState<Post[]>([]);
 
 	useEffect(() => {
-		useFetchPosts(setPosts, id, cookies.get('token') ?? '');
+		fetchPosts(setPosts, id, cookies.get('token') ?? '');
 	}, []);
 
 	useEffect(() => {
@@ -81,7 +81,7 @@ const getRandomArbitrary = (min: number, max: number): number => {
 	return Math.floor(Math.random() * (max - min) + min);
 };
 
-const useFetchPosts = async (
+const fetchPosts = async (
 	setPosts: Dispatch<SetStateAction<Post[]>>,
 	id: string,
 	token: string

@@ -17,6 +17,10 @@ const Page = ({ params }: { params: { id: string } }) => {
 	const [post, setPost] = useState<PostType | null>(null);
 
 	useEffect(() => {
+		if (!id || !cookies) {
+			return;
+		}
+
 		(async () => {
 			try {
 				const response = await fetch(
@@ -35,7 +39,7 @@ const Page = ({ params }: { params: { id: string } }) => {
 				console.error(error);
 			}
 		})();
-	}, []);
+	}, [cookies, id]);
 
 	return (
 		post && (

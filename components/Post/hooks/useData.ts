@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 
 // ------------------------------------------------------ Types --------------------------------------------------------
 import Post from '@customTypes/post';
-import Comment from '@customTypes/Comment';
+import Comment from '@customTypes/comment';
 import { jwtDecode } from 'jwt-decode';
 
 const colors = ['2ab2f7', '5da800', 'cc0052', 'ccb200'];
@@ -22,6 +22,16 @@ const useData = (
 	const [isSelf, setIsSelf] = useState(false);
 
 	useEffect(() => {
+		if (
+			!post.comments ||
+			!post.user.id ||
+			!post.user.name ||
+			!previewComments ||
+			!token
+		) {
+			return;
+		}
+
 		const decodedToken = jwtDecode(token ?? '');
 
 		(async () => {
@@ -76,7 +86,7 @@ const useData = (
 		) {
 			setIsSelf(true);
 		}
-	}, []);
+	}, [post.comments, post.user.id, post.user.name, previewComments, token]);
 
 	return {
 		formattedComments,

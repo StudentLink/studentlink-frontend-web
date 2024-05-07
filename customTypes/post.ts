@@ -1,6 +1,6 @@
 import User from './user';
 import School from './school';
-import Comment from './Comment';
+import Comment from './comment';
 
 type Post = {
 	id: number;

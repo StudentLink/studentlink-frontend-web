@@ -25,7 +25,7 @@ const useData = (username: string) => {
 	const [isAdmin, setIsAdmin] = useState<boolean>(false);
 
 	useEffect(() => {
-		useFetchPosts(setPosts, username, cookies.get('token') ?? '');
+		fetchPosts(setPosts, username, cookies.get('token') ?? '');
 	}, []);
 
 	useEffect(() => {
@@ -101,7 +101,7 @@ const getRandomArbitrary = (min: number, max: number): number => {
 	return Math.floor(Math.random() * (max - min) + min);
 };
 
-const useFetchPosts = async (
+const fetchPosts = async (
 	setPosts: Dispatch<SetStateAction<Post[]>>,
 	username: string,
 	token: string

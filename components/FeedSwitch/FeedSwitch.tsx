@@ -26,38 +26,6 @@ const FeedSwitch = () => {
 	const type = useAppSelector(state => state.feed.type);
 
 	// Simulate a click to get some posts at page load
-	useEffect(() => {
-		handleClick('global');
-	}, []);
-
-	useEffect(() => {
-		if (
-			selectedRef &&
-			selectedIndicatorRef.current &&
-			containerRef.current
-		) {
-			const containerBounds =
-				containerRef.current.getBoundingClientRect();
-			const bounds = selectedRef.getBoundingClientRect();
-			selectedIndicatorRef.current.setAttribute(
-				'style',
-				`left: ${bounds.left - containerBounds.left - 4}px; width: ${bounds.width + 8}px`
-			);
-		}
-	}, [selectedRef, selectedIndicatorRef.current, containerRef.current]);
-
-	useEffect(() => {
-		const buttons: NodeListOf<HTMLButtonElement> =
-			document.querySelectorAll('.feedOption');
-
-		if (type == 'school') {
-			setSelectedRef(buttons.item(1));
-		} else if (type == 'locations') {
-			setSelectedRef(buttons.item(2));
-		} else {
-			setSelectedRef(buttons.item(0));
-		}
-	}, [type]);
 
 	const handleClick = async (type: 'global' | 'school' | 'locations') => {
 		dispatch(setType(type));
@@ -79,6 +47,39 @@ const FeedSwitch = () => {
 			console.error(error);
 		}
 	};
+
+	useEffect(() => {
+		handleClick('global');
+	}, []);
+
+	useEffect(() => {
+		if (
+			selectedRef &&
+			selectedIndicatorRef.current &&
+			containerRef.current
+		) {
+			const containerBounds =
+				containerRef.current.getBoundingClientRect();
+			const bounds = selectedRef.getBoundingClientRect();
+			selectedIndicatorRef.current.setAttribute(
+				'style',
+				`left: ${bounds.left - containerBounds.left - 4}px; width: ${bounds.width + 8}px`
+			);
+		}
+	}, [selectedRef]);
+
+	useEffect(() => {
+		const buttons: NodeListOf<HTMLButtonElement> =
+			document.querySelectorAll('.feedOption');
+
+		if (type == 'school') {
+			setSelectedRef(buttons.item(1));
+		} else if (type == 'locations') {
+			setSelectedRef(buttons.item(2));
+		} else {
+			setSelectedRef(buttons.item(0));
+		}
+	}, [type]);
 
 	return (
 		<div

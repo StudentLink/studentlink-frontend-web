@@ -137,6 +137,7 @@ const Profile = ({ params }: { params: { username: string } }) => {
 							{posts.length > 0 ? (
 								posts.map(post => (
 									<Post
+										key={`post#${post.id}`}
 										post={post}
 										previewComments
 									/>
