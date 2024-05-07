@@ -34,7 +34,6 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
 					<StoreProvider>
 						<CookiesProvider>
 							<Providers>
-								<Navbar />
 								<div className='pageContainer'>{children}</div>
 							</Providers>
 						</CookiesProvider>

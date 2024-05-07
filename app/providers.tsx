@@ -12,6 +12,7 @@ import { AuthState, setAuth, setIsLogged } from '@lib/features/auth/authSlice';
 // ------------------------------------------------------ Utils --------------------------------------------------------
 import { jwtDecode } from 'jwt-decode';
 import { Dispatch, ThunkDispatch, UnknownAction } from '@reduxjs/toolkit';
+import Navbar from '@components/Navbar/Navbar';
 
 const Providers = ({ children }: { children: React.ReactNode }) => {
 	const dispatch = useAppDispatch();
@@ -41,7 +42,12 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
 		}
 	}, [cookies, router, path, isLogged, dispatch]);
 
-	return <>{children}</>;
+	return (
+		<>
+			{!path.startsWith('/auth') && <Navbar />}
+			{children}
+		</>
+	);
 };
 
 export default Providers;

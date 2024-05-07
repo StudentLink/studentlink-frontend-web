@@ -14,11 +14,13 @@ import { useAppDispatch } from '@lib/hooks';
 import { setIsLogged } from '@lib/features/auth/authSlice';
 import useData from './hooks/useData';
 
+// ------------------------------------------------------ Utils --------------------------------------------------------
+import { getCityFromInsee } from '@utils/cities';
+
 // ------------------------------------------------- Assets & Styles ---------------------------------------------------
 import { IonIcon } from '@ionic/react';
 import { logOutOutline, settingsOutline } from 'ionicons/icons';
 import './styles.scss';
-import { getCityFromInsee } from '@utils/cities';
 
 const Profile = ({ params }: { params: { username: string } }) => {
 	const { username } = params;
