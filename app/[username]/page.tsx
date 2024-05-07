@@ -8,6 +8,7 @@ import { useCookies } from 'next-client-cookies';
 
 // --------------------------------------------------- Components ------------------------------------------------------
 import Loader from '@components/Loader/Loader';
+import Post from '@components/Post/Post';
 
 // ------------------------------------------------------ Hooks --------------------------------------------------------
 import { useAppDispatch } from '@lib/hooks';
@@ -19,13 +20,12 @@ import { getCityFromInsee } from '@utils/cities';
 
 // ------------------------------------------------- Assets & Styles ---------------------------------------------------
 import { IonIcon } from '@ionic/react';
-import { logOutOutline, settingsOutline } from 'ionicons/icons';
+import { logOutOutline, settingsOutline, trashOutline } from 'ionicons/icons';
 import './styles.scss';
-import Post from '@components/Post/Post';
 
 const Profile = ({ params }: { params: { username: string } }) => {
 	const { username } = params;
-	const { user, posts, isSelf, error } = useData(username);
+	const { user, posts, isSelf, error, isAdmin } = useData(username);
 	const router = useRouter();
 	const cookies = useCookies();
 	const dispatch = useAppDispatch();
@@ -34,6 +34,36 @@ const Profile = ({ params }: { params: { username: string } }) => {
 		dispatch(setIsLogged(false));
 		cookies.remove('token');
 		router.push('/auth/signin');
+	};
+
+	const deleteUser = async () => {
+		if (!user) return;
+		if (
+			!confirm(
+				`Es-tu sûr de vouloir supprimer ${isSelf ? 'ton' : 'ce'} compte ?`
+			)
+		)
+			return;
+
+		try {
+			await fetch(
+				`https://studentlink.etudiants.ynov-bordeaux.com/api/users/${user.id}`,
+				{
+					method: 'DELETE',
+					headers: {
+						Authorization: `Bearer ${cookies.get('token')}`,
+					},
+				}
+			);
+
+			if (isSelf) {
+				router.push('/auth/signin');
+				return;
+			}
+			router.push('/');
+		} catch (error) {
+			console.error(error);
+		}
 	};
 
 	return (
@@ -73,22 +103,32 @@ const Profile = ({ params }: { params: { username: string } }) => {
 							</div>
 						</div>
 
-						{isSelf && (
-							<div className='settingsContainer'>
-								<Link
-									href='/settings'
-									className='settings rotate'
-								>
-									<IonIcon icon={settingsOutline} />
-								</Link>
+						<div className='settingsContainer'>
+							{isAdmin && (
 								<button
 									className='settings'
-									onClick={logOut}
+									onClick={deleteUser}
 								>
-									<IonIcon icon={logOutOutline} />
+									<IonIcon icon={trashOutline} />
 								</button>
-							</div>
-						)}
+							)}
+							{isSelf && (
+								<>
+									<Link
+										href='/settings'
+										className='settings rotate'
+									>
+										<IonIcon icon={settingsOutline} />
+									</Link>
+									<button
+										className='settings'
+										onClick={logOut}
+									>
+										<IonIcon icon={logOutOutline} />
+									</button>
+								</>
+							)}
+						</div>
 					</div>
 
 					<div className='postsContainer'>

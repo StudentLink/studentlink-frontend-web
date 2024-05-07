@@ -23,11 +23,35 @@ import { Dispatch, SetStateAction, useState } from 'react';
 import Button from '@components/Button/Button';
 import { setAuth } from '@lib/features/auth/authSlice';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 const Settings = () => {
 	const user = useAppSelector(state => state.auth);
+	const cookies = useCookies();
+	const router = useRouter();
 
 	const [popupType, setPopupType] = useState<string | null>(null);
+
+	const deleteUser = async () => {
+		if (!confirm('Es-tu sûr de vouloir supprimer ton compte ?')) return;
+
+		try {
+			await fetch(
+				`https://studentlink.etudiants.ynov-bordeaux.com/api/users/${user.id}`,
+				{
+					method: 'DELETE',
+					headers: {
+						Authorization: `Bearer ${cookies.get('token')}`,
+					},
+				}
+			);
+
+			cookies.remove('token');
+			router.push('/auth/signin');
+		} catch (error) {
+			console.error(error);
+		}
+	};
 
 	return (
 		<div className='settingsPage'>
@@ -76,6 +100,13 @@ const Settings = () => {
 								Modifier le mot de passe
 							</button>
 						</div>
+
+						<button
+							className='danger'
+							onClick={deleteUser}
+						>
+							Supprimer le compte
+						</button>
 					</div>
 				</div>
 			</section>

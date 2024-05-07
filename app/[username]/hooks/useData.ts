@@ -22,6 +22,7 @@ const useData = (username: string) => {
 	const [error, setError] = useState<string | null>(null);
 	const [posts, setPosts] = useState<Post[]>([]);
 	const [isSelf, setIsSelf] = useState<boolean>(false);
+	const [isAdmin, setIsAdmin] = useState<boolean>(false);
 
 	useEffect(() => {
 		useFetchPosts(setPosts, username, cookies.get('token') ?? '');
@@ -62,6 +63,15 @@ const useData = (username: string) => {
 					}));
 
 					if (
+						(
+							(jwtDecode(cookies.get('token') || '') as any)
+								.roles as string[]
+						).includes('ROLE_ADMIN')
+					) {
+						setIsAdmin(true);
+					}
+
+					if (
 						jwtDecode(cookies.get('token') || '').sub == response.id
 					) {
 						setIsSelf(true);
@@ -81,6 +91,7 @@ const useData = (username: string) => {
 		posts,
 		error,
 		isSelf,
+		isAdmin,
 	};
 };
 

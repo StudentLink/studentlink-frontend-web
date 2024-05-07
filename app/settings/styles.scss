@@ -67,6 +67,13 @@
 						}
 					}
 				}
+
+				& > .danger {
+					padding: 7.5px 12.5px;
+					width: 100%;
+					border-radius: 7px;
+					background-color: var(--darken-pink);
+				}
 			}
 		}
 	}
