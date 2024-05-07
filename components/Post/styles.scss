@@ -13,6 +13,7 @@
 		background-color: var(--black-3);
 
 		& > .postHeader {
+			position: relative;
 			display: flex;
 			flex-wrap: nowrap;
 			align-items: center;
@@ -39,6 +40,17 @@
 						font-size: 0.85rem;
 						color: var(--darken-white);
 					}
+				}
+			}
+
+			& > .deleteButton {
+				position: absolute;
+				top: 0;
+				right: 0;
+				font-size: 1.2rem;
+
+				& > * {
+					color: var(--pink);
 				}
 			}
 		}

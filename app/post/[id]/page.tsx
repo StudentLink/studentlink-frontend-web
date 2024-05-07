@@ -29,6 +29,7 @@ const Page = ({ params }: { params: { id: string } }) => {
 				);
 
 				const data = await response.json();
+
 				setPost(data);
 			} catch (error) {
 				console.error(error);

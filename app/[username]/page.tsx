@@ -21,6 +21,7 @@ import { getCityFromInsee } from '@utils/cities';
 import { IonIcon } from '@ionic/react';
 import { logOutOutline, settingsOutline } from 'ionicons/icons';
 import './styles.scss';
+import Post from '@components/Post/Post';
 
 const Profile = ({ params }: { params: { username: string } }) => {
 	const { username } = params;
@@ -95,24 +96,10 @@ const Profile = ({ params }: { params: { username: string } }) => {
 						<div className='posts'>
 							{posts.length > 0 ? (
 								posts.map(post => (
-									<div
-										className='post'
-										key={post.id}
-									>
-										<p className='content'>
-											{post.content}
-										</p>
-										<div className='footer'>
-											<p className='locations'>
-												{post.location
-													? post.location
-													: 'France'}
-											</p>
-											<p className='date'>
-												{post.createdAt}
-											</p>
-										</div>
-									</div>
+									<Post
+										post={post}
+										previewComments
+									/>
 								))
 							) : (
 								<p className='noPosts'>

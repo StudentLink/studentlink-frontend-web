@@ -19,7 +19,7 @@ import { formatDate } from '@utils/date';
 // ------------------------------------------------- Assets & Styles ---------------------------------------------------
 import './styles.scss';
 import { IonIcon } from '@ionic/react';
-import { chatbubbleOutline, sendOutline } from 'ionicons/icons';
+import { chatbubbleOutline, sendOutline, trashOutline } from 'ionicons/icons';
 
 const Post = ({
 	post,
@@ -33,9 +33,10 @@ const Post = ({
 	const commentInputRef = useRef<HTMLSpanElement>(null);
 	const cookies = useCookies();
 
-	const { formattedComments, profileImage } = useData(
+	const { formattedComments, profileImage, isSelf } = useData(
 		post,
-		previewComments ?? false
+		previewComments ?? false,
+		cookies.get('token')
 	);
 
 	const postComment = async () => {
@@ -51,7 +52,7 @@ const Post = ({
 		}
 
 		try {
-			const response = await fetch(
+			await fetch(
 				'https://studentlink.etudiants.ynov-bordeaux.com/api/comments',
 				{
 					method: 'POST',
@@ -65,9 +66,46 @@ const Post = ({
 				}
 			);
 
-			const comment = await response.json();
+			location.reload();
+		} catch (error) {
+			console.error(error);
+		}
+	};
 
-			post.comments.push(comment);
+	const deletePost = async () => {
+		if (!confirm('Es-tu sûr de vouloir supprimer ce post ?')) return;
+
+		try {
+			await fetch(
+				`https://studentlink.etudiants.ynov-bordeaux.com/api/posts/${post.id}`,
+				{
+					method: 'DELETE',
+					headers: {
+						Authorization: `Bearer ${cookies.get('token')}`,
+					},
+				}
+			);
+
+			location.reload();
+		} catch (error) {
+			console.error(error);
+		}
+	};
+	const deleteComment = async (id: number) => {
+		if (!confirm('Es-tu sûr de vouloir supprimer ce commentaire ?')) return;
+
+		try {
+			await fetch(
+				`https://studentlink.etudiants.ynov-bordeaux.com/api/comments/${id}`,
+				{
+					method: 'DELETE',
+					headers: {
+						Authorization: `Bearer ${cookies.get('token')}`,
+					},
+				}
+			);
+
+			location.reload();
 		} catch (error) {
 			console.error(error);
 		}
@@ -101,6 +139,14 @@ const Post = ({
 									: post.school?.name}
 							</p>
 						</div>
+						{isSelf && (
+							<button
+								className='deleteButton'
+								onClick={deletePost}
+							>
+								<IonIcon icon={trashOutline} />
+							</button>
+						)}
 					</div>
 					<div className='postSeparator' />
 					<div className='postContent'>{post.content}</div>
@@ -165,6 +211,14 @@ const Post = ({
 												</span>
 											</Link>
 										</div>
+										<button
+											className='deleteButton'
+											onClick={() =>
+												deleteComment(comment.id)
+											}
+										>
+											<IonIcon icon={trashOutline} />
+										</button>
 									</div>
 									<p className='commentContent'>
 										{comment.content}

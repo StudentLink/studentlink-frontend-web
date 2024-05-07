@@ -8,14 +8,22 @@ import { useEffect, useState } from 'react';
 // ------------------------------------------------------ Types --------------------------------------------------------
 import Post from '@customTypes/post';
 import Comment from '@customTypes/Comment';
+import { jwtDecode } from 'jwt-decode';
 
 const colors = ['2ab2f7', '5da800', 'cc0052', 'ccb200'];
 
-const useData = (post: Post, previewComments: boolean) => {
+const useData = (
+	post: Post,
+	previewComments: boolean,
+	token: string | undefined
+) => {
 	const [formattedComments, setFormattedComments] = useState<Comment[]>([]);
 	const [profileImage, setProfileImage] = useState<string | null>(null);
+	const [isSelf, setIsSelf] = useState(false);
 
 	useEffect(() => {
+		const decodedToken = jwtDecode(token ?? '');
+
 		(async () => {
 			const pictureRequest = await fetch(
 				`https://ui-avatars.com/api/?format=png&size=512&rounded=true&color=0c1920&background=${colors[getRandomArbitrary(0, colors.length)]}&name=${post.user.name.replaceAll(/[ -'_]+/g, '+')}`
@@ -44,6 +52,15 @@ const useData = (post: Post, previewComments: boolean) => {
 							...comments[i].user,
 							picture: picture,
 						};
+
+						if (
+							`${decodedToken.sub}` == `${comments[i].user.id}` ||
+							((decodedToken as any).roles as string[]).includes(
+								'ROLE_ADMIN'
+							)
+						) {
+							comments[i].isSelf = true;
+						}
 					} catch (error) {
 						console.error(error);
 					}
@@ -52,11 +69,19 @@ const useData = (post: Post, previewComments: boolean) => {
 				setFormattedComments(comments);
 			}
 		})();
+
+		if (
+			`${decodedToken.sub}` == `${post.user.id}` ||
+			((decodedToken as any).roles as string[]).includes('ROLE_ADMIN')
+		) {
+			setIsSelf(true);
+		}
 	}, []);
 
 	return {
 		formattedComments,
 		profileImage,
+		isSelf,
 	};
 };
 
