@@ -44,7 +44,11 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
 
 	return (
 		<>
-			{!path.startsWith('/auth') && <Navbar />}
+			{!path.startsWith('/auth') && cookies.get('token') ? (
+				<Navbar />
+			) : (
+				<></>
+			)}
 			{children}
 		</>
 	);
